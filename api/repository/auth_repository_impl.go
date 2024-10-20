@@ -13,6 +13,8 @@ type AuthRepositoryImpl struct {
 	tx *gorm.DB
 }
 
+/// OMIT(clause.association) : agar data yg foreignKey tidak terpengaruh
+
 func (repository AuthRepositoryImpl) Register(ctx context.Context, user *domain.User) error {
 	//#VALIDATE
 	var existUser domain.User
@@ -30,11 +32,6 @@ func (repository AuthRepositoryImpl) Register(ctx context.Context, user *domain.
 
 	log.Println("success create new user")
 	return nil
-}
-
-func (repository AuthRepositoryImpl) Login(ctx context.Context, user *domain.User) error {
-	//TODO implement me
-	panic("implement me")
 }
 
 func (repository AuthRepositoryImpl) UpdateAcc(ctx context.Context, id string, user *domain.User) error {
@@ -70,6 +67,7 @@ func (repository AuthRepositoryImpl) DeleteAcc(ctx context.Context, id string) e
 	}
 
 	if err := repository.tx.Omit(clause.Associations).Delete(&user).Error; err != nil {
+		log.Fatal("failed delete data")
 		return err
 	}
 
@@ -78,6 +76,25 @@ func (repository AuthRepositoryImpl) DeleteAcc(ctx context.Context, id string) e
 }
 
 func (repository AuthRepositoryImpl) FindById(ctx context.Context, id string) (domain.User, error) {
-	//TODO implement me
-	panic("implement me")
+	var user domain.User
+	result := repository.tx.Omit(clause.Associations).Take(&user, "id=?", id)
+	if result.Error != nil {
+		log.Fatal("failed find user by Id")
+		return domain.User{}, result.Error
+	}
+
+	log.Println("success find by id")
+	return user, nil
+}
+
+func (repository AuthRepositoryImpl) FindByEmail(ctx context.Context, email string) (domain.User, error) {
+	var user domain.User
+	result := repository.tx.Omit(clause.Associations).Take(&user, "id=?", email)
+	if result.Error != nil {
+		log.Fatal("failed find user by Email")
+		return domain.User{}, result.Error
+	}
+
+	log.Println("success find by email")
+	return user, nil
 }
