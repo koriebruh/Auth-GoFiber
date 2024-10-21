@@ -10,5 +10,5 @@ type AuthRepository interface {
 	UpdateAcc(ctx context.Context, id string, user *domain.User) error
 	DeleteAcc(ctx context.Context, id string) error
 	FindById(ctx context.Context, id string) (domain.User, error)
-	FindByEmail(ctx context.Context, email string) (domain.User, error)
+	FindByUserName(ctx context.Context, username string) (domain.User, error)
 }

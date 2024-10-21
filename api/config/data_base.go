@@ -7,6 +7,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"koriebruh/restful/api/model/domain"
 	"log"
 	"os"
 	"time"
@@ -51,7 +52,9 @@ func InitDB() *gorm.DB {
 
 	//#AUTOMIGRATE
 	//
-	if err = db.AutoMigrate( /*migrate model here */ ); err != nil {
+	if err = db.AutoMigrate(
+		&domain.User{},
+	); err != nil {
 		panic(errors.New("Failed to migrate model"))
 	}
 	log.Println("success auto migrate database")

@@ -13,6 +13,12 @@ type AuthRepositoryImpl struct {
 	tx *gorm.DB
 }
 
+func NewAuthRepository(db *gorm.DB) AuthRepository {
+	return &AuthRepositoryImpl{
+		tx: db,
+	}
+}
+
 /// OMIT(clause.association) : agar data yg foreignKey tidak terpengaruh
 
 func (repository AuthRepositoryImpl) Register(ctx context.Context, user *domain.User) error {
@@ -87,14 +93,14 @@ func (repository AuthRepositoryImpl) FindById(ctx context.Context, id string) (d
 	return user, nil
 }
 
-func (repository AuthRepositoryImpl) FindByEmail(ctx context.Context, email string) (domain.User, error) {
+func (repository AuthRepositoryImpl) FindByUserName(ctx context.Context, username string) (domain.User, error) {
 	var user domain.User
-	result := repository.tx.Omit(clause.Associations).Take(&user, "id=?", email)
+	result := repository.tx.Omit(clause.Associations).Take(&user, "id=?", username)
 	if result.Error != nil {
-		log.Fatal("failed find user by Email")
+		log.Fatal("failed find user by UserName")
 		return domain.User{}, result.Error
 	}
 
-	log.Println("success find by email")
+	log.Println("success find by UserName")
 	return user, nil
 }

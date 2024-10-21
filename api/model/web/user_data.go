@@ -1,7 +1,8 @@
 package web
 
 type UserData struct {
-	Id    string `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	UserName string `json:"user_name"`
+	Email    string `json:"email"`
 }
