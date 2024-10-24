@@ -17,7 +17,7 @@ func NewAuth(app *fiber.App, authService service.AuthService, authMid fiber.Hand
 	}
 
 	app.Post("token/generate", h.GenerateToken)
-	app.Get("token/validate", authMid, h.GenerateToken)
+	app.Get("token/validate", authMid, h.ValidateToken)
 }
 
 func (a authHandler) GenerateToken(ctx *fiber.Ctx) error {

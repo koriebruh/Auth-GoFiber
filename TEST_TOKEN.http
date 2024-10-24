@@ -9,5 +9,5 @@ Content-Type: application/json
 }
 
 ###
-GET https://localhost:3000/token/validate
-Accept: application/json
+GET http://localhost:3000/token/validate
+Authorization: Bearer MwKBjGGIVqcU9LHM

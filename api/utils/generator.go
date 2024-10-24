@@ -1,16 +1,21 @@
 package utils
 
 import (
-	"math/rand/v2"
+	"math/rand"
+	"time"
 )
 
 func GeneratorRandString(n int) string {
 	var charsets = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
 	letters := make([]rune, n)
-	for _, i := range letters {
-		letters[i] = charsets[rand.IntN(len(charsets))]
+
+	// Membuat sumber acak baru
+	src := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(src)
+
+	for i := range letters {
+		letters[i] = charsets[r.Intn(len(charsets))]
 	}
 
 	return string(letters)
-
 }
