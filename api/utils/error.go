@@ -2,7 +2,21 @@ package utils
 
 import "errors"
 
-var ErrUserNotFound = errors.New("user not found")
-var ErrInvalidCredential = errors.New("invalid credential")
-
 var ErrAuthFailed = errors.New("error authentication")
+
+//func GetHttpStatus(err error) int {
+//	switch err {
+//	case errors.Is(err, ErrAuthFailed):
+//		return 401
+//	default:
+//		return 500
+//	}
+//}
+
+func GetHttpStatus(err error) int {
+	if errors.Is(err, ErrAuthFailed) {
+		return 401
+	}
+	// Tambahkan kondisi lain di sini jika ada error tambahan yang perlu diperiksa
+	return 500
+}

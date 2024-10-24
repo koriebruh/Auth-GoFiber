@@ -95,7 +95,7 @@ func (repository AuthRepositoryImpl) FindById(ctx context.Context, id string) (d
 
 func (repository AuthRepositoryImpl) FindByUserName(ctx context.Context, username string) (domain.User, error) {
 	var user domain.User
-	result := repository.tx.Omit(clause.Associations).Take(&user, "id=?", username)
+	result := repository.tx.Omit(clause.Associations).Take(&user, "user_name=?", username)
 	if result.Error != nil {
 		log.Fatal("failed find user by UserName")
 		return domain.User{}, result.Error

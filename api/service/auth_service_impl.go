@@ -40,7 +40,12 @@ func (service AuthServiceImpl) Authentication(ctx context.Context, request web.A
 
 	token := utils.GeneratorRandString(16)
 	userJson, _ := json.Marshal(user)
-	_ = service.cacheRepository.Set("user"+token, userJson)
+	
+	//_ = service.cacheRepository.Set("user"+token, userJson)
+	err = service.cacheRepository.Set("user:"+token, userJson)
+	if err != nil {
+		return web.AuthResponse{}, err
+	}
 
 	return web.AuthResponse{
 		AccessToken: token,

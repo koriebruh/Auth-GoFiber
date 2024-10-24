@@ -1,0 +1,13 @@
+### GENEARATE TOKEN
+POST http://localhost:3000/token/generate
+Accept: application/json
+Content-Type: application/json
+
+{
+  "user_name":"jamal",
+  "password":"123"
+}
+
+###
+GET https://localhost:3000/token/validate
+Accept: application/json
